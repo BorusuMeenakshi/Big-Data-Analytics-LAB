@@ -17,9 +17,11 @@ object SparkWordCount {
 
     val wc=input.flatMap(line=>{line.split(" ")}).map(word=>(word,1)).cache()
 
-    val output=wc.reduceByKey(_+_)
+    val results=wc.reduceByKey(_+_)
 
-    output.saveAsTextFile("output")
+    val output=results.sortBy(_._2,false)
+
+    output.saveAsTextFile("output2")
 
     val o=output.collect()
 
